@@ -56,6 +56,21 @@
         // Prediction 2: run input through teachable machine classification model
         const prediction = await model.predict(posenetOutput);
 
+        if(prediction[0].className=="깍지끼고스트레칭"&&prediction[0].probability.toFixed(2)==1.00)
+        {
+            labelContainer.childNodes[0].innerHTML="깍지끼고스트레칭"
+        }
+        else if(prediction[1].className=="앉았다일어서기"&&prediction[1].probability.toFixed(2)==1.00)
+        {
+            labelContainer.childNodes[1].innerHTML="앉았다일어서기"
+        }
+        else if(prediction[2].className=="허리스트레칭"&&prediction[2].probability.toFixed(2)==1.00)
+        {
+            labelContainer.childNodes[2].innerHTML="허리스트레칭"
+        }
+        else{ labelContainer.childNodes[0].innerHTML="알수없음" }
+        
+        
         for (let i = 0; i < maxPredictions; i++) {
             const classPrediction =
                 prediction[i].className + ": " + prediction[i].probability.toFixed(2);
@@ -80,28 +95,7 @@
 
 
 
-    // run the webcam image through the image model
-    async function predict() {
-        // predict can take in an image, video or canvas html element
-        const prediction = await model.predict(webcam.canvas);
-        if(prediction[0].className=="깍지끼고스트레칭"&&prediction[0].probability.toFixed(2)==1.00)
-        {
-            labelContainer.childNodes[0].innerHTML="깍지끼고스트레칭"
-        }
-        else if(prediction[1].className=="앉았다일어서기"&&prediction[1].probability.toFixed(2)==1.00)
-        {
-            labelContainer.childNodes[1].innerHTML="앉았다일어서기"
-        }
-        else if(prediction[2].className=="허리스트레칭"&&prediction[2].probability.toFixed(2)==1.00)
-        {
-            labelContainer.childNodes[2].innerHTML="허리스트레칭"
-        }
-        else{ labelContainer.childNodes[0].innerHTML="알수없음" }
-        for (let i = 0; i < maxPredictions; i++) {
-            const classPrediction =
-                prediction[i].className + ": " + prediction[i].probability.toFixed(2);
-            labelContainer.childNodes[i].innerHTML = classPrediction;
-        }
+    
     }
 </script>
 
